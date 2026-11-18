@@ -29,16 +29,6 @@ Python 3.8 + Tkinter, packaged as a single `.exe` with PyInstaller.
 
 Changes to `config.py` or `plantilla.py` require rebuilding the `.exe` (`build.bat`). `credenciales.ini` and `logo.png` are read at runtime, so you can change them without rebuilding.
 
-### Why `credenciales.ini` and not environment variables
-
-Environment variables work in Python (`os.environ["..."]`), and they also work from a PyInstaller `.exe`. But on Windows 7 you set them through Control Panel → System → Environment Variables, which is awkward to explain to whoever runs the PC. A file next to the `.exe` is easier:
-
-- It is **not** baked into the `.exe` (the app reads it at startup from the `.exe`'s folder).
-- It is in `.gitignore`, so it never reaches the repository.
-- If it's missing, the app creates a template and asks you to fill it in.
-
-Use an **app password**, not the account's real password (Gmail: Google account → Security → App passwords).
-
 ## Test mode
 
 `MODO_PRUEBA = True` is the default. Every email goes to `CORREO_PRUEBA` (or, if that's empty, to the sender account) with `[PRUEBA]` in the subject and the real recipients at the top. Test it, then set `MODO_PRUEBA = False` and rebuild.

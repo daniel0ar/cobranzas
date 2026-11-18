@@ -51,7 +51,7 @@ SEPARADOR_DECIMAL = "."
 # (or, if empty, to the sender account in credenciales.ini) with "[PRUEBA]"
 # in the subject. Set to False when you are ready to send for real.
 MODO_PRUEBA = True
-CORREO_PRUEBA = ""
+CORREO_PRUEBA = "daniel0ar@hotmail.com"
 
 # --------------------------------------------------------------------------
 # Styles (simple light theme)
