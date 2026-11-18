@@ -8,10 +8,9 @@ if not exist .venv (
 call .venv\Scripts\activate.bat
 python -m pip install -r requirements.txt || goto :error
 python -m unittest discover -s tests || goto :error
-python -m PyInstaller --noconfirm --onefile --windowed --name Cobranzas --collect-data certifi app.py || goto :error
+python -m PyInstaller --noconfirm --onefile --windowed --name Cobranzas --collect-data certifi --add-data "assets\logo_full.png;assets" app.py || goto :error
 
 if not exist dist\credenciales.ini copy /Y credenciales.example.ini dist\credenciales.ini >nul
-if exist logo.png copy /Y logo.png dist\ >nul
 echo.
 echo Listo: dist\Cobranzas.exe
 echo Copie Cobranzas.exe y credenciales.ini (completado) a la PC con Windows 7.

@@ -22,12 +22,12 @@ Python 3.8 + Tkinter, packaged as a single `.exe` with PyInstaller.
 | Minimum days overdue | `config.py`, `DIAS_MORA_MINIMO` |
 | Test mode (on by default) | `config.py`, `MODO_PRUEBA` / `CORREO_PRUEBA` |
 | Colors, fonts, window size | `config.py`, `COLORES`, `FUENTE_*`, `TAMANO_VENTANA` |
-| Logo | Put `logo.png` (~180×60 px, PNG/GIF) next to the `.exe`. Name/size are in `config.py`, `LOGO_*` |
+| Logo | `assets/logo_full.png` (PNG/GIF), bundled into the `.exe`. Path and box size are in `config.py`, `LOGO_*` |
 | Email subject and text | `plantilla.py`, `ASUNTO`, `CUERPO` (placeholders are listed in the file) |
 | Invoice table columns | `plantilla.py`, `TABLA_COLUMNAS` |
 | SMTP account / password | `credenciales.ini` next to the `.exe` (**not** in the code) |
 
-Changes to `config.py` or `plantilla.py` require rebuilding the `.exe` (`build.bat`). `credenciales.ini` and `logo.png` are read at runtime, so you can change them without rebuilding.
+Changes to `config.py` or `plantilla.py` require rebuilding the `.exe` (`build.bat`). Replacing the logo also requires a rebuild. `credenciales.ini` is read at runtime, so you can change it without rebuilding.
 
 ## Test mode
 
@@ -39,7 +39,7 @@ Changes to `config.py` or `plantilla.py` require rebuilding the `.exe` (`build.b
    - If unsure whether the Windows 7 PC is 32 or 64-bit, use the **32-bit** installer (it works on both).
    - Windows 7 needs SP1 and update KB2533623. If the `.exe` complains about `api-ms-win-crt-*.dll`, install KB2999226.
 2. Copy this folder to that PC and double-click `build.bat`. It creates a venv, installs dependencies, runs the tests and produces `dist\Cobranzas.exe`.
-3. On the Windows 7 PC, put these in one folder: `Cobranzas.exe`, a filled-in `credenciales.ini` and, optionally, `logo.png`. Make sure the clients file is at `RUTA_CLIENTES`.
+3. On the Windows 7 PC, put these in one folder: `Cobranzas.exe` and a filled-in `credenciales.ini`. Make sure the clients file is at `RUTA_CLIENTES`.
 
 The simplest option is to build on the Windows 7 PC itself. A `.exe` built on Windows 10 with Python 3.8 also works.
 

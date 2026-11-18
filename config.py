@@ -12,18 +12,18 @@ next to the .exe (see credenciales.example.ini).
 # >>> PATH TO THE CLIENTS FILE (names + emails). Change it here. <<<
 # A relative path (e.g. "clients_info.xlsx") is resolved against the folder
 # where the .exe (or app.py) lives. Supports .xlsx and .xls.
-RUTA_CLIENTES = r"C:\Cobranzas\clients_info.xlsx"
+RUTA_CLIENTES = r"../clients_info_full.xlsx"
 
 # Column headers in the clients file (compared ignoring case, accents,
 # punctuation and extra spaces).
 COLUMNA_NOMBRE_CLIENTE = "Nombre Cliente"
 COLUMNA_CORREO = "E-Mail"
 
-# Logo shown in the header. PNG or GIF, ideally ~180x60 px.
-# Relative paths are resolved against the app folder, so you can just drop
-# a logo.png next to the .exe without rebuilding.
-LOGO_ARCHIVO = "logo.png"
-LOGO_ANCHO = 180
+# Logo shown in the header (PNG or GIF). It is bundled inside the .exe by
+# build.bat, so changing it requires rebuilding. It is shrunk to fit the
+# LOGO_ANCHO x LOGO_ALTO box, keeping its proportions.
+LOGO_ARCHIVO = "assets/logo_full.png"
+LOGO_ANCHO = 260
 LOGO_ALTO = 60
 
 # Log of sent emails (CSV, opens in Excel). Relative to the app folder.
@@ -81,4 +81,4 @@ FUENTE_TITULO = ("Segoe UI", 16, "bold")
 FUENTE_SUBTITULO = ("Segoe UI", 11)
 FUENTE_MONO = ("Consolas", 10)   # used in the email preview
 
-TAMANO_VENTANA = "1200x700"
+TAMANO_VENTANA = "1920x1080"

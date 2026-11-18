@@ -7,6 +7,7 @@ Build:  build.bat  (creates dist\\Cobranzas.exe)
 
 import csv
 import datetime
+import math
 import os
 import queue
 import sys
@@ -31,6 +32,28 @@ def carpeta_app() -> str:
 
 def ruta_en_app(ruta: str) -> str:
     return ruta if os.path.isabs(ruta) else os.path.join(carpeta_app(), ruta)
+
+
+def ruta_recurso(ruta: str) -> str:
+    """File bundled with the app (e.g. assets/): inside the .exe when packaged, else next to this file."""
+    if os.path.isabs(ruta):
+        return ruta
+    base = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, ruta)
+
+
+def escalar_imagen(imagen, ancho_max, alto_max):
+    """Shrink a PhotoImage to fit the box, using the best zoom/subsample fraction (Tk has no resize)."""
+    escala = min(ancho_max / imagen.width(), alto_max / imagen.height())
+    if escala >= 1:
+        return imagen
+    mejor = (1, math.ceil(1 / escala))   # plain subsample, always fits
+    for divisor in range(2, 21):
+        multiplo = int(escala * divisor)
+        if multiplo >= 1 and multiplo / divisor > mejor[0] / mejor[1]:
+            mejor = (multiplo, divisor)
+    multiplo, divisor = mejor
+    return (imagen.zoom(multiplo) if multiplo > 1 else imagen).subsample(divisor)
 
 
 class Fila:
@@ -144,24 +167,20 @@ class App(tk.Tk):
     def _encabezado(self):
         barra = tk.Frame(self, bg=C["panel"], highlightthickness=1, highlightbackground=C["borde"])
         barra.pack(fill="x")
-        # Logo area (fixed size). Put logo.png next to the .exe / app.py (see config.LOGO_ARCHIVO).
+        # Logo area (fixed size). The logo is bundled from assets/ (see config.LOGO_ARCHIVO).
         marco_logo = tk.Frame(barra, width=config.LOGO_ANCHO, height=config.LOGO_ALTO, bg=C["panel"])
         marco_logo.pack_propagate(False)
         marco_logo.pack(side="left", padx=20, pady=10)
-        ruta_logo = ruta_en_app(config.LOGO_ARCHIVO)
+        ruta_logo = ruta_recurso(config.LOGO_ARCHIVO)
         if os.path.isfile(ruta_logo):
             try:
-                imagen = tk.PhotoImage(file=ruta_logo)
-                factor = max(1, -(-imagen.width() // config.LOGO_ANCHO), -(-imagen.height() // config.LOGO_ALTO))
-                self._logo = imagen.subsample(factor, factor) if factor > 1 else imagen
+                self._logo = escalar_imagen(tk.PhotoImage(file=ruta_logo), config.LOGO_ANCHO, config.LOGO_ALTO)
             except tk.TclError:
                 self._logo = None
         if self._logo is not None:
             tk.Label(marco_logo, image=self._logo, bg=C["panel"]).pack(expand=True)
-        else:
-            marco_logo.configure(highlightthickness=1, highlightbackground=C["borde"])
-            tk.Label(marco_logo, text="Espacio para logo", bg=C["panel"], fg=C["texto_suave"],
-                     font=config.FUENTE_BASE).pack(expand=True)
+
+        ttk.Button(barra, text="Salir", command=self._cerrar).pack(side="right", padx=20, pady=10, anchor="n")
 
         textos = tk.Frame(barra, bg=C["panel"])
         textos.pack(side="left", pady=10)
