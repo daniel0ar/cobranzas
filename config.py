@@ -50,7 +50,7 @@ SEPARADOR_DECIMAL = "."
 # While True, NO email goes to clients: every email is sent to CORREO_PRUEBA
 # (or, if empty, to the sender account in credenciales.ini) with "[PRUEBA]"
 # in the subject. Set to False when you are ready to send for real.
-MODO_PRUEBA = True
+MODO_PRUEBA = False
 CORREO_PRUEBA = "daniel0ar@hotmail.com"
 
 # --------------------------------------------------------------------------
