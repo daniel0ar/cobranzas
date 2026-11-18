@@ -1,0 +1,5 @@
+# Python 3.8 (last version that runs on Windows 7)
+openpyxl==3.1.5
+xlrd==2.0.1
+certifi>=2024.2.2
+pyinstaller==5.13.2
